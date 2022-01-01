@@ -1,4 +1,4 @@
-module github.com/summerblue/gohub
+module gohub
 
 go 1.17
 
