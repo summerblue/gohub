@@ -2,6 +2,7 @@
 package logger
 
 import (
+	"encoding/json"
 	"fmt"
 	"gohub/pkg/app"
 	"os"
@@ -25,6 +26,7 @@ func InitLogger(filename string, maxSize, maxBackup, maxAge int, compress bool, 
 	// 设置日志等级，具体请见 config/log.go 文件
 	logLevel := new(zapcore.Level)
 	if err := logLevel.UnmarshalText([]byte(level)); err != nil {
+		// TODO 需要更醒目的输出
 		fmt.Println("日志初始化错误，日志级别设置有误。请修改 config/log.go 文件中的 log.level 配置项")
 	}
 
@@ -104,4 +106,69 @@ func getLogWriter(filename string, maxSize, maxBackup, maxAge int, compress bool
 		// 生产环境只记录文件
 		return zapcore.AddSync(lumberJackLogger)
 	}
+}
+
+// Dump 调试专用，不会中断程序，会在终端打印出 warning 消息。
+// 第一个参数会使用 json.Marshal 进行渲染，第二个参数消息（可选）
+// 		logger.Dump(user.User{Name:"test"})
+// 		logger.Dump(user.User{Name:"test"}, "用户信息")
+func Dump(value interface{}, msg ...string) {
+	b, err := json.Marshal(value)
+	if err != nil {
+		// TODO 需要更醒目的输出
+		fmt.Println("Dump() failded to Marshal value!")
+	}
+
+	// 判断第二个参数是否传参 msg
+	if len(msg) > 0 {
+		Logger.Warn("Dump", zap.String(msg[0], string(b)))
+	} else {
+		Logger.Warn("Dump", zap.String("data", string(b)))
+	}
+}
+
+// LogIf 当 err != nil 时记录 error 等级的日志
+func LogIf(err error) {
+	if err != nil {
+		Logger.Error("Error Occurred:", zap.Error(err))
+	}
+}
+
+// LogWarnIf 当 err != nil 时记录 warning 等级的日志
+func LogWarnIf(err error) {
+	if err != nil {
+		Logger.Warn("Error Occurred:", zap.Error(err))
+	}
+}
+
+// LogInfoIf 当 err != nil 时记录 info 等级的日志
+func LogInfoIf(err error) {
+	if err != nil {
+		Logger.Info("Error Occurred:", zap.Error(err))
+	}
+}
+
+// Debug 调试日志，详尽的程序日志
+func Debug(msg string, fields ...zap.Field) {
+	Logger.Debug(msg, fields...)
+}
+
+// Info 告知类日志
+func Info(msg string, fields ...zap.Field) {
+	Logger.Info(msg, fields...)
+}
+
+// Warn 警告类
+func Warn(msg string, fields ...zap.Field) {
+	Logger.Warn(msg, fields...)
+}
+
+// Error 错误时记录，不应该中断程序，查看日志时重点关注
+func Error(msg string, fields ...zap.Field) {
+	Logger.Error(msg, fields...)
+}
+
+// Fatal 级别同 Error(), 写完 log 后调用 os.Exit(1) 退出程序
+func Fatal(msg string, fields ...zap.Field) {
+	Logger.Fatal(msg, fields...)
 }
