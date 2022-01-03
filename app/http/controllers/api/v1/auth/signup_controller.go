@@ -5,7 +5,7 @@ import (
 	v1 "gohub/app/http/controllers/api/v1"
 	"gohub/app/models/user"
 	"gohub/app/requests"
-	"net/http"
+	"gohub/pkg/response"
 
 	"github.com/gin-gonic/gin"
 )
@@ -24,7 +24,7 @@ func (sc *SignupController) IsPhoneExist(c *gin.Context) {
 	}
 
 	//  检查数据库并返回响应
-	c.JSON(http.StatusOK, gin.H{
+	response.SuccessJSON(c, gin.H{
 		"exist": user.IsPhoneExist(request.Phone),
 	})
 }
@@ -32,10 +32,10 @@ func (sc *SignupController) IsPhoneExist(c *gin.Context) {
 // IsEmailExist 检测邮箱是否已注册
 func (sc *SignupController) IsEmailExist(c *gin.Context) {
 	request := requests.SignupEmailExistRequest{}
-	if ok := requests.Validate(c, &request, requests.SignupPhoneExist); !ok {
+	if ok := requests.Validate(c, &request, requests.SignupEmailExist); !ok {
 		return
 	}
-	c.JSON(http.StatusOK, gin.H{
+	response.SuccessJSON(c, gin.H{
 		"exist": user.IsEmailExist(request.Email),
 	})
 }
