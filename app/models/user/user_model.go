@@ -28,3 +28,8 @@ func (userModel *User) Create() {
 func (userModel *User) ComparePassword(_password string) bool {
 	return hash.BcryptCheck(_password, userModel.Password)
 }
+
+func (userModel *User) Save() (rowsAffected int64) {
+	result := database.DB.Save(&userModel)
+	return result.RowsAffected
+}
