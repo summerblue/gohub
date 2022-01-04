@@ -9,7 +9,7 @@ import (
 
 // User 用户模型
 type User struct {
-	models.CommonIDField
+	models.BaseModel
 
 	Name     string `json:"name,omitempty"`
 	Email    string `gorm:"default:null" json:"-"`
