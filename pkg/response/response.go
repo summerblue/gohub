@@ -41,6 +41,11 @@ func Created(c *gin.Context, data interface{}) {
 	})
 }
 
+// CreatedJSON 响应 200 和 JSON 数据
+func CreatedJSON(c *gin.Context, data interface{}) {
+	c.JSON(http.StatusCreated, data)
+}
+
 // Abort404 响应 404，未传参 msg 时使用默认消息
 func Abort404(c *gin.Context, msg ...string) {
 	c.AbortWithStatusJSON(http.StatusNotFound, gin.H{
@@ -103,6 +108,14 @@ func ValidationError(c *gin.Context, errors map[string][]string) {
 	c.AbortWithStatusJSON(http.StatusUnprocessableEntity, gin.H{
 		"message": "请求验证不通过，具体请查看 errors",
 		"errors":  errors,
+	})
+}
+
+// Unauthorized 响应 401，未传参 msg 时使用默认消息
+// 登录失败、jwt 解析失败时调用
+func Unauthorized(c *gin.Context, msg ...string) {
+	c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{
+		"message": defaultMessage("请求解析错误，请确认请求格式是否正确。上传文件请使用 multipart 标头，参数请使用 JSON 格式。", msg...),
 	})
 }
 
