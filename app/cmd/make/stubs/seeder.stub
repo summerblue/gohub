@@ -1,0 +1,23 @@
+package seeders
+
+import (
+	"fmt"
+	"gohub/database/factories"
+	"gohub/pkg/console"
+	"gohub/pkg/database"
+	"gohub/pkg/logger"
+)
+
+func Seed{{StructNamePlural}}Table() {
+
+	{{VariableNamePlural}} := factories.Make{{StructNamePlural}}(10)
+
+	result := database.DB.Table("{{TableName}}").Create(&{{VariableNamePlural}})
+
+	if err := result.Error; err != nil {
+		logger.LogIf(err)
+		return
+	}
+
+	console.Success(fmt.Sprintf("Table [%v] %v rows seeded", result.Statement.Table, result.RowsAffected))
+}
