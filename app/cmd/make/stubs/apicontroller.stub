@@ -14,7 +14,7 @@ type {{StructNamePlural}}Controller struct {
 }
 
 func (ctrl *{{StructNamePlural}}Controller) Index(c *gin.Context) {
-	{{VariableNamePlural}}, _ := {{PackageName}}.All()
+	{{VariableNamePlural}} := {{PackageName}}.All()
 	response.Data(c, {{VariableNamePlural}})
 }
 
