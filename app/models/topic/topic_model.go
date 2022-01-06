@@ -4,8 +4,8 @@ package topic
 import (
 	"gohub/app/models"
 	"gohub/app/models/category"
+	"gohub/app/models/user"
 	"gohub/pkg/database"
-	"os/user"
 )
 
 type Topic struct {
