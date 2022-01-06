@@ -48,8 +48,10 @@ func Has(key string) bool {
 // 	cache.GetObject("key", &model)
 func GetObject(key string, wanted interface{}) {
 	val := Cache.Store.Get(key)
-	err := json.Unmarshal([]byte(val), &wanted)
-	logger.LogIf(err)
+	if len(val) > 0 {
+		err := json.Unmarshal([]byte(val), &wanted)
+		logger.LogIf(err)
+	}
 }
 
 func GetString(key string) string {
