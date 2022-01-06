@@ -71,10 +71,24 @@ func (rds RedisClient) Set(key string, value interface{}, expiration time.Durati
 func (rds RedisClient) Get(key string) string {
 	result, err := rds.Client.Get(rds.Context, key).Result()
 	if err != nil {
-		logger.ErrorString("Redis", "Get", err.Error())
+		if err != redis.Nil {
+			logger.ErrorString("Redis", "Get", err.Error())
+		}
 		return ""
 	}
 	return result
+}
+
+// Has 判断一个 key 是否存在，内部错误和 redis.Nil 都返回 false
+func (rds RedisClient) Has(key string) bool {
+	_, err := rds.Client.Get(rds.Context, key).Result()
+	if err != nil {
+		if err != redis.Nil {
+			logger.ErrorString("Redis", "Get", err.Error())
+		}
+		return false
+	}
+	return true
 }
 
 // Del 删除存储在 redis 里的数据，支持多个 key 传参
