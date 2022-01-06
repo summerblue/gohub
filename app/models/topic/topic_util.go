@@ -6,10 +6,11 @@ import (
 	"gohub/pkg/paginator"
 
 	"github.com/gin-gonic/gin"
+	"gorm.io/gorm/clause"
 )
 
 func Get(idstr string) (topic Topic) {
-	database.DB.Where("id", idstr).First(&topic)
+	database.DB.Preload(clause.Associations).Where("id", idstr).First(&topic)
 	return
 }
 
@@ -20,7 +21,7 @@ func GetBy(field, value string) (topic Topic) {
 
 func All() (topics []Topic) {
 	database.DB.Find(&topics)
-	return 
+	return
 }
 
 func IsExist(field, value string) bool {
