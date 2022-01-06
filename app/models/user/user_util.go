@@ -57,14 +57,13 @@ func All() (users []User) {
 }
 
 // Paginate 分页内容
-func Paginate(c *gin.Context, perPage int) ([]User, paginator.Paging) {
-	var users []User
-	paging := paginator.Paginate(
+func Paginate(c *gin.Context, perPage int) (users []User, paging paginator.Paging) {
+	paging = paginator.Paginate(
 		c,
 		database.DB.Model(User{}),
 		&users,
 		app.V1URL(database.TableName(&User{})),
 		perPage,
 	)
-	return users, paging
+	return
 }
