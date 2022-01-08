@@ -3,6 +3,7 @@ package user
 
 import (
 	"gohub/app/models"
+	"gohub/pkg/database"
 )
 
 // User 用户模型
@@ -15,4 +16,9 @@ type User struct {
 	Password string `json:"-"`
 
 	models.CommonTimestampsField
+}
+
+// Create 创建用户，通过 User.ID 来判断是否创建成功
+func (userModel *User) Create() {
+	database.DB.Create(&userModel)
 }
