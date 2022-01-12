@@ -85,3 +85,16 @@ func (ctrl *TopicsController) Delete(c *gin.Context) {
 
 	response.Abort500(c, "删除失败，请稍后尝试~")
 }
+
+func (ctrl *TopicsController) Index(c *gin.Context) {
+	request := requests.PaginationRequest{}
+	if ok := requests.Validate(c, &request, requests.Pagination); !ok {
+		return
+	}
+
+	data, pager := topic.Paginate(c, 10)
+	response.JSON(c, gin.H{
+		"data":  data,
+		"pager": pager,
+	})
+}
