@@ -1,0 +1,25 @@
+package factories
+
+import (
+    "gohub/app/models/{{PackageName}}"
+    "gohub/pkg/helpers"
+
+    "github.com/bxcodec/faker/v3"
+)
+
+func Make{{StructNamePlural}}(count int) []{{PackageName}}.{{StructName}} {
+
+    var objs []{{PackageName}}.{{StructName}}
+
+    // 设置唯一性，如 {{StructName}} 模型的某个字段需要唯一，即可取消注释
+    // faker.SetGenerateUniqueValues(true)
+
+    for i := 0; i < count; i++ {
+        {{VariableName}}Model := {{PackageName}}.{{StructName}}{
+            FIXME()
+        }
+        objs = append(objs, {{VariableName}}Model)
+    }
+
+    return objs
+}
