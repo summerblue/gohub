@@ -4,6 +4,7 @@ go 1.17
 
 require (
 	github.com/KenmyZhang/aliyun-communicate v0.0.0-20180308134849-7997edc57454
+	github.com/bxcodec/faker/v3 v3.7.0
 	github.com/gertd/go-pluralize v0.1.7
 	github.com/gin-gonic/gin v1.7.7
 	github.com/go-redis/redis/v8 v8.11.4
