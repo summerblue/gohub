@@ -24,3 +24,14 @@ func IsExist(field, value string) bool {
     database.DB.Model({{StructName}}{}).Where(" = ?", field, value).Count(&count)
     return count > 0
 }
+
+func Paginate(c *gin.Context, perPage int) ({{VariableNamePlural}} []{{StructName}}, paging paginator.Paging) {
+    paging = paginator.Paginate(
+        c,
+        database.DB.Model({{StructName}}{}),
+        &{{VariableNamePlural}},
+        app.V1URL(database.TableName(&{{StructName}}{})),
+        perPage,
+    )
+    return
+}
