@@ -1,7 +1,11 @@
 package {{PackageName}}
 
 import (
-    "gohub/pkg/database"
+	"gohub/pkg/app"
+	"gohub/pkg/database"
+	"gohub/pkg/paginator"
+
+	"github.com/gin-gonic/gin"
 )
 
 func Get(idstr string) ({{VariableName}} {{StructName}}) {
