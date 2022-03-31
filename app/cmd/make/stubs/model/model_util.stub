@@ -25,7 +25,7 @@ func All() ({{VariableNamePlural}} []{{StructName}}) {
 
 func IsExist(field, value string) bool {
     var count int64
-    database.DB.Model({{StructName}}{}).Where(" = ?", field, value).Count(&count)
+    database.DB.Model({{StructName}}{}).Where(field + " = ?", value).Count(&count)
     return count > 0
 }
 
