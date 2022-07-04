@@ -191,7 +191,7 @@ func (p Paginator) getNextPageURL() string {
 	return ""
 }
 
-// getPrevPageURL 返回下一页的链接
+// getPrevPageURL 返回上一页的链接
 func (p Paginator) getPrevPageURL() string {
 	if p.Page <= 1 || p.Page > p.TotalPage {
 		return ""
