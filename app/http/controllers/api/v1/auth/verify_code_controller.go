@@ -4,7 +4,7 @@ import (
 	v1 "gohub/app/http/controllers/api/v1"
 	"gohub/pkg/captcha"
 	"gohub/pkg/logger"
-	"net/http"
+	"gohub/pkg/response"
 
 	"github.com/gin-gonic/gin"
 )
@@ -21,7 +21,7 @@ func (vc *VerifyCodeController) ShowCaptcha(c *gin.Context) {
 	// 记录错误日志，因为验证码是用户的入口，出错时应该记 error 等级的日志
 	logger.LogIf(err)
 	// 返回给用户
-	c.JSON(http.StatusOK, gin.H{
+	response.JSON(c, gin.H{
 		"captcha_id":    id,
 		"captcha_image": b64s,
 	})
