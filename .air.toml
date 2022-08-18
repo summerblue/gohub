@@ -39,7 +39,7 @@ tmp_dir = "tmp"
   # error 发生时结束运行
   stop_on_error = true
   # 命令附加参数 (bin/full_bin). Will run './tmp/main hello world'.
-  args_bin  =  ["hello", "world"]
+  args_bin  =  []
 
 [color]
   # 自定义每个部分显示的颜色。如果找不到颜色，使用原始的应用程序日志。
