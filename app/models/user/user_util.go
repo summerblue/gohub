@@ -33,3 +33,9 @@ func GetByMulti(loginID string) (userModel User) {
 		First(&userModel)
 	return
 }
+
+// Get 通过 ID 获取用户
+func Get(idstr string) (userModel User) {
+	database.DB.Where("id", idstr).First(&userModel)
+	return
+}
