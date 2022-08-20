@@ -5,7 +5,7 @@ import (
 	"bytes"
 	"gohub/pkg/helpers"
 	"gohub/pkg/logger"
-	"io/ioutil"
+	"io"
 	"time"
 
 	"github.com/gin-gonic/gin"
@@ -35,9 +35,9 @@ func Logger() gin.HandlerFunc {
 		var requestBody []byte
 		if c.Request.Body != nil {
 			// c.Request.Body 是一个 buffer 对象，只能读取一次
-			requestBody, _ = ioutil.ReadAll(c.Request.Body)
+			requestBody, _ = io.ReadAll(c.Request.Body)
 			// 读取后，重新赋值 c.Request.Body ，以供后续的其他操作
-			c.Request.Body = ioutil.NopCloser(bytes.NewBuffer(requestBody))
+			c.Request.Body = io.NopCloser(bytes.NewBuffer(requestBody))
 		}
 
 		// 设置开始时间

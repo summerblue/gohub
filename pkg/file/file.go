@@ -6,7 +6,6 @@ import (
 	"gohub/pkg/app"
 	"gohub/pkg/auth"
 	"gohub/pkg/helpers"
-	"io/ioutil"
 	"mime/multipart"
 	"os"
 	"path/filepath"
@@ -18,7 +17,7 @@ import (
 
 // Put 将数据存入文件
 func Put(data []byte, to string) error {
-	err := ioutil.WriteFile(to, data, 0644)
+	err := os.WriteFile(to, data, 0644)
 	if err != nil {
 		return err
 	}

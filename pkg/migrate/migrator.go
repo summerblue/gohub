@@ -5,7 +5,7 @@ import (
 	"gohub/pkg/console"
 	"gohub/pkg/database"
 	"gohub/pkg/file"
-	"io/ioutil"
+	"os"
 
 	"gorm.io/gorm"
 )
@@ -146,7 +146,7 @@ func (migrator *Migrator) readAllMigrationFiles() []MigrationFile {
 
 	// 读取 database/migrations/ 目录下的所有文件
 	// 默认是会按照文件名称进行排序
-	files, err := ioutil.ReadDir(migrator.Folder)
+	files, err := os.ReadDir(migrator.Folder)
 	console.ExitIf(err)
 
 	var migrateFiles []MigrationFile
